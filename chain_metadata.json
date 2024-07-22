@@ -1,0 +1,50 @@
+{
+  "ics": {
+    "spawn_time": "2024-07-22T23:32:00Z",
+    "title": "Dungeon Chain",
+    "summary": ".md description of your chain and all other relevant information",
+    "chain_id": "dungeon-1",
+    "initial_height": {
+      "revision_number": 1,
+      "revision_height": 0
+    },
+    "unbonding_period": 1814400000000000,
+    "ccv_timeout_period": 2419200000000000,
+    "transfer_timeout_period": 3600000000000,
+    "consumer_redistribution_fraction": "0.75",
+    "blocks_per_distribution_transmission": 1000,
+    "historical_entries": 10000,
+    "genesis_hash": "",
+    "binary_hash": "",
+    "distribution_transmission_channel": "",
+    "top_N": 0,
+    "validators_power_cap": 0,
+    "validator_set_cap": 25,
+    "allowlist": [],
+    "denylist": []
+  },
+  "token": {
+    "display_denom": "DGN",
+    "denom": "udgn",
+    "decimals": 6,
+    "inflation": "0.10",
+    "initial_supply": "1000000000000000000",
+    "max_supply": "1000000000000000000"
+  },
+  "project": {
+    "github": "github.com/CryptoDungeon/dungeonchain",
+    "target_launch_date": "2024-07-22T23:32:00Z",
+    "logo": "https://example.com/logo.png",
+    "website": "https://example.com",
+    "description": "A short description of your project",
+    "short_description": "A short description of your project",
+    "whitepaper": "https://cdn.discordapp.com/attachments/1264948881393713202/1264948957922988105/Dungeon_Chain_White_Paper.docx?ex=669fbb05&is=669e6985&hm=8a506424b622312a365684fc62321f69bba461e8d0fede8510dff58bd90c482e&",
+    "contact": {
+      "email": "",
+      "telegram": "",
+      "twitter": "",
+      "name": "",
+      "discord": ""
+    }
+  }
+}
