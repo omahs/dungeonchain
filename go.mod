@@ -42,7 +42,7 @@ require (
 	github.com/cosmos/cosmos-db v1.0.2
 	github.com/cosmos/cosmos-sdk v0.50.8
 	github.com/cosmos/gogoproto v1.5.0
-	github.com/cosmos/ibc-apps/middleware/packet-forward-middleware/v8 v8.0.2-0.20240228211029-91e486ec4dbb
+	github.com/cosmos/ibc-apps/middleware/packet-forward-middleware/v8 v8.0.3-0.20240808203856-57803750a140
 	github.com/cosmos/ibc-go/modules/capability v1.0.0
 	github.com/cosmos/ibc-go/v8 v8.3.0
 	github.com/cosmos/interchain-security/v5 v5.0.0
