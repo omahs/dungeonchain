@@ -3,6 +3,7 @@
 # sh network/dungeon-1/from_scratch.sh
 #
 
+# TODO: or dragon-1
 CHAIN_ID=dungeon-1
 
 make install
@@ -53,9 +54,11 @@ update_genesis '.app_state["distribution"]["params"]["community_tax"]="0.0250000
 
 update_genesis '.app_state["gov"]["params"]["min_deposit"]=[{"denom":"udgn","amount":"100000000"}]'
 update_genesis '.app_state["gov"]["params"]["max_deposit_period"]="259200s"'
-update_genesis '.app_state["gov"]["params"]["voting_period"]="259200s"'
-update_genesis '.app_state["gov"]["params"]["expedited_min_deposit"]=[{"denom":"udgn","amount":"1000000000"}]'
 update_genesis '.app_state["gov"]["params"]["min_deposit_ratio"]="0.100000000000000000"' # 10%
+update_genesis '.app_state["gov"]["params"]["voting_period"]="432000s"' # 5 days
+update_genesis '.app_state["gov"]["params"]["expedited_voting_period"]="172800s"' # 2 days
+update_genesis '.app_state["gov"]["params"]["expedited_min_deposit"]=[{"denom":"udgn","amount":"1000000000"}]'
+update_genesis '.app_state["gov"]["params"]["expedited_threshold"]="0.500000000000000000"' # 50% instead of 66.7%
 
 update_genesis '.app_state["mint"]["minter"]["inflation"]="0.100000000000000000"'
 update_genesis '.app_state["mint"]["minter"]["annual_provisions"]="0.000000000000000000"'
@@ -65,15 +68,18 @@ update_genesis '.app_state["mint"]["params"]["inflation_max"]="0.100000000000000
 update_genesis '.app_state["mint"]["params"]["inflation_min"]="0.100000000000000000"'
 update_genesis '.app_state["mint"]["params"]["blocks_per_year"]="18934560"' # 2s blocks (( 6s blocks = 6311520 per year ))
 
+# Will change to 0.0001udgn / small small amount of uatom once IBC is connected
+update_genesis `printf '.app_state["globalfee"]["params"]["minimum_gas_prices"]=[{"amount":"0.000000000000000000","denom":"%s"}]' udgn`
+
 update_genesis '.app_state["slashing"]["params"]["signed_blocks_window"]="30000"'
 update_genesis '.app_state["slashing"]["params"]["min_signed_per_window"]="0.010000000000000000"'
 update_genesis '.app_state["slashing"]["params"]["downtime_jail_duration"]="60s"'
-update_genesis '.app_state["slashing"]["params"]["slash_fraction_double_sign"]="0.000000000000000000"' # no need to slash delegators, ATOM Will slash
+update_genesis '.app_state["slashing"]["params"]["slash_fraction_double_sign"]="0.000000000000000000"' # TODO: no need to slash delegators, ATOM Will slash
 update_genesis '.app_state["slashing"]["params"]["slash_fraction_downtime"]="0.000000000000000000"'
 
 update_genesis '.app_state["staking"]["params"]["bond_denom"]="udgn"' # leaving unbonding time at 1814400s (21 days)
 update_genesis '.app_state["staking"]["params"]["min_commission_rate"]="0.000000000000000000"' # TODO:
-update_genesis '.app_state["staking"]["params"]["max_validators"]="20"' # 0%?
+update_genesis '.app_state["staking"]["params"]["max_validators"]=20' # 0%?
 
 update_genesis '.app_state["tokenfactory"]["params"]["denom_creation_fee"]=[]'
 update_genesis '.app_state["tokenfactory"]["params"]["denom_creation_gas_consume"]="250000"'
@@ -83,8 +89,13 @@ update_genesis '.app_state["wasm"]["params"]["instantiate_default_permission"]="
 update_genesis '.app_state["wasm"]["params"]["code_upload_access"]["addresses"]=["dungeon13gd97ke6erejqk2p050xkpc63jhtujre26s0gg"]' # TODO: this is currently lee, need a team wallet / multisig?
 
 # TODO: ics params? (check with hypha)
+# TODO: what about PSS params? is this the wrong version? (i.e. soft_opt_out_threshold, provider.initial_val_set or do we keep that standard)
 update_genesis '.app_state["ccvconsumer"]["params"]["enabled"]=true'
 update_genesis '.app_state["ccvconsumer"]["params"]["blocks_per_distribution_transmission"]="3000"' # since 3x faster blocks
+# update_genesis '.app_state["ccvconsumer"]["params"]["consumer_redistribution_fraction"]="0.75"' # TODO: 0.10?
+# update_genesis '.app_state["ccvconsumer"]["params"]["provider_fee_pool_addr_str"]=""' # TODO: cosmoshub fee distr pool? or leave as is.
+update_genesis '.app_state["ccvconsumer"]["params"]["reward_denoms"]=["udgn"]'
+update_genesis '.app_state["ccvconsumer"]["params"]["provider_reward_denoms"]=["uatom"]' # TODO: do we set this?
 
 ## === GENESIS ACCOUNTS ===
 

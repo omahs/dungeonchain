@@ -1,7 +1,7 @@
 {
   "app_name": "dungeond",
   "app_version": "1.0.0",
-  "genesis_time": "2024-08-10T14:06:10.853051987Z",
+  "genesis_time": "2024-08-10T16:22:49.622385475Z",
   "chain_id": "dungeon-1",
   "initial_height": 1,
   "app_hash": null,
@@ -17,30 +17,17 @@
       },
       "accounts": [
         {
-          "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
-          "base_vesting_account": {
-            "base_account": {
-              "address": "dungeon1z0nvmv57cqax4s6lssft9yhfn8ksxcf79vmagu",
-              "pub_key": null,
-              "account_number": "0",
-              "sequence": "0"
-            },
-            "original_vesting": [
-              {
-                "denom": "udgn",
-                "amount": "18000000000000"
-              }
-            ],
-            "delegated_free": [],
-            "delegated_vesting": [],
-            "end_time": "1725027635"
-          }
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "dungeon13gd97ke6erejqk2p050xkpc63jhtujre26s0gg",
+          "pub_key": null,
+          "account_number": "0",
+          "sequence": "0"
         },
         {
           "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
           "base_vesting_account": {
             "base_account": {
-              "address": "dungeon13gd97ke6erejqk2p050xkpc63jhtujre26s0gg",
+              "address": "dungeon1z0nvmv57cqax4s6lssft9yhfn8ksxcf79vmagu",
               "pub_key": null,
               "account_number": "1",
               "sequence": "0"
@@ -312,7 +299,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "5000000000000"
+              "amount": "2500000000000"
             }
           ]
         },
@@ -321,7 +308,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "72000000000000"
+              "amount": "18000000000000"
             }
           ]
         },
@@ -330,7 +317,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "54000000000000"
+              "amount": "18000000000000"
             }
           ]
         },
@@ -339,7 +326,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "54000000000000"
+              "amount": "18000000000000"
             }
           ]
         },
@@ -348,7 +335,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "5000000000000"
+              "amount": "2500000000000"
             }
           ]
         },
@@ -357,7 +344,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "5000000000000"
+              "amount": "2500000000000"
             }
           ]
         },
@@ -366,7 +353,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "54000000000000"
+              "amount": "18000000000000"
             }
           ]
         },
@@ -375,7 +362,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "5000000000000"
+              "amount": "2500000000000"
             }
           ]
         },
@@ -384,7 +371,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "54000000000000"
+              "amount": "18000000000001"
             }
           ]
         },
@@ -393,7 +380,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "5000000000000"
+              "amount": "2500000000000"
             }
           ]
         },
@@ -402,7 +389,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "54000000000000"
+              "amount": "18000000000000"
             }
           ]
         },
@@ -411,7 +398,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "54000000000000"
+              "amount": "18000000000000"
             }
           ]
         },
@@ -420,7 +407,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "5000000000000"
+              "amount": "2500000000000"
             }
           ]
         },
@@ -429,7 +416,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "10000000000000"
+              "amount": "5000000000000"
             }
           ]
         }
@@ -437,7 +424,7 @@
       "supply": [
         {
           "denom": "udgn",
-          "amount": "436000000000000"
+          "amount": "146000000000001"
         }
       ],
       "denom_metadata": [
@@ -472,7 +459,7 @@
     "ccvconsumer": {
       "params": {
         "enabled": true,
-        "blocks_per_distribution_transmission": "1000",
+        "blocks_per_distribution_transmission": "3000",
         "distribution_transmission_channel": "",
         "provider_fee_pool_addr_str": "",
         "ccv_timeout_period": "2419200s",
@@ -481,8 +468,12 @@
         "historical_entries": "10000",
         "unbonding_period": "1209600s",
         "soft_opt_out_threshold": "0.05",
-        "reward_denoms": [],
-        "provider_reward_denoms": [],
+        "reward_denoms": [
+          "udgn"
+        ],
+        "provider_reward_denoms": [
+          "uatom"
+        ],
         "retry_delay_period": "3600s"
       },
       "provider": {
@@ -540,7 +531,12 @@
     },
     "globalfee": {
       "params": {
-        "minimum_gas_prices": []
+        "minimum_gas_prices": [
+          {
+            "amount": "0.000000000000000000",
+            "denom": "udgn"
+          }
+        ]
       }
     },
     "gov": {
@@ -559,15 +555,15 @@
           }
         ],
         "max_deposit_period": "259200s",
-        "voting_period": "259200s",
+        "voting_period": "432000s",
         "quorum": "0.334000000000000000",
         "threshold": "0.500000000000000000",
         "veto_threshold": "0.334000000000000000",
         "min_initial_deposit_ratio": "0.000000000000000000",
         "proposal_cancel_ratio": "0.500000000000000000",
         "proposal_cancel_dest": "",
-        "expedited_voting_period": "86400s",
-        "expedited_threshold": "0.667000000000000000",
+        "expedited_voting_period": "172800s",
+        "expedited_threshold": "0.500000000000000000",
         "expedited_min_deposit": [
           {
             "denom": "udgn",
@@ -672,9 +668,6 @@
       "entries": []
     },
     "packetfowardmiddleware": {
-      "params": {
-        "fee_percentage": "0.000000000000000000"
-      },
       "in_flight_packets": {}
     },
     "params": null,
@@ -692,7 +685,7 @@
     "staking": {
       "params": {
         "unbonding_time": "1814400s",
-        "max_validators": 100,
+        "max_validators": 20,
         "max_entries": 7,
         "historical_entries": 10000,
         "bond_denom": "udgn",
