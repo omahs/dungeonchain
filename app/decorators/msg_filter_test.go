@@ -1,13 +1,15 @@
 package decorators_test
 
 import (
+	"context"
 	"testing"
 
 	sdkmath "cosmossdk.io/math"
-
 	"github.com/cometbft/cometbft/crypto/secp256k1"
 	sdk "github.com/cosmos/cosmos-sdk/types"
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
+	authtypes "github.com/cosmos/cosmos-sdk/x/auth/types"
+	vestingtypes "github.com/cosmos/cosmos-sdk/x/auth/vesting/types"
+	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
 	"github.com/stretchr/testify/suite"
 
 	"github.com/CryptoDungeon/dungeonchain/app/decorators"
@@ -27,21 +29,39 @@ func TestAnteTestSuite(t *testing.T) {
 func (s *AnteTestSuite) TestAnteMsgFilterLogic() {
 	acc := sdk.AccAddress(secp256k1.GenPrivKey().PubKey().Address())
 
-	// test blocking any BankSend Messages
-	ante := decorators.FilterDecorator(&banktypes.MsgSend{})
-	msg := banktypes.NewMsgSend(
-		acc,
-		acc,
-		sdk.NewCoins(sdk.NewCoin("stake", sdkmath.NewInt(1))),
-	)
-	_, err := ante.AnteHandle(s.ctx, decorators.NewMockTx(msg), false, decorators.EmptyAnte)
-	s.Require().Error(err)
+	msg := stakingtypes.NewMsgDelegate(acc.String(), acc.String(), sdk.NewCoin("stake", sdkmath.NewInt(1)))
 
-	// validate other messages go through still (such as MsgMultiSend)
-	msgMultiSend := banktypes.NewMsgMultiSend(
-		banktypes.NewInput(acc, sdk.NewCoins(sdk.NewCoin("stake", sdkmath.NewInt(1)))),
-		[]banktypes.Output{banktypes.NewOutput(acc, sdk.NewCoins(sdk.NewCoin("stake", sdkmath.NewInt(1))))},
-	)
-	_, err = ante.AnteHandle(s.ctx, decorators.NewMockTx(msgMultiSend), false, decorators.EmptyAnte)
-	s.Require().NoError(err)
+	// test blocking vesting acc from delegating
+	ante := decorators.NewMsgStakingVestingDeny(NewMockAccKeeper(&vestingtypes.BaseVestingAccount{}))
+	_, err := ante.AnteHandle(s.ctx, decorators.NewMockTx(msg), false, decorators.EmptyAnte)
+	s.Require().Contains(err.Error(), "vesting accounts cannot delegate tokens")
+
+	ante = decorators.NewMsgStakingVestingDeny(NewMockAccKeeper(&vestingtypes.PeriodicVestingAccount{}))
+	_, err = ante.AnteHandle(s.ctx, decorators.NewMockTx(msg), false, decorators.EmptyAnte)
+	s.Require().Contains(err.Error(), "vesting accounts cannot delegate tokens")
+
+	ante = decorators.NewMsgStakingVestingDeny(NewMockAccKeeper(&vestingtypes.ContinuousVestingAccount{}))
+	_, err = ante.AnteHandle(s.ctx, decorators.NewMockTx(msg), false, decorators.EmptyAnte)
+	s.Require().Contains(err.Error(), "vesting accounts cannot delegate tokens")
+
+	// test not blocking a standard account from delegating
+	ante = decorators.NewMsgStakingVestingDeny(NewMockAccKeeper(&authtypes.BaseAccount{}))
+	_, err = ante.AnteHandle(s.ctx, decorators.NewMockTx(msg), false, decorators.EmptyAnte)
+	s.Require().Nil(err)
+}
+
+// mock account keeper
+type mockAccKeeper struct {
+	accType sdk.AccountI
+}
+
+func NewMockAccKeeper(accType sdk.AccountI) mockAccKeeper {
+	return mockAccKeeper{
+		accType: accType,
+	}
+}
+
+// GetAccount(ctx context.Context, addr sdk.AccAddress) sdk.AccountI
+func (m mockAccKeeper) GetAccount(ctx context.Context, addr sdk.AccAddress) sdk.AccountI {
+	return m.accType
 }
