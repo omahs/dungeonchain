@@ -38,4 +38,5 @@ cd ../
 rm -rf cosmos/
 
 jq -r '.app_state.staking.delegations' cosmos_export.json > ../snapshots/cosmos_delegators.json
+jq -r '.app_state.staking.redelegations' cosmos_export.json > ../snapshots/cosmos_redelegations.json
 ```

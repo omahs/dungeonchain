@@ -1,4 +1,5 @@
 # open final allocations, iterate, and build the genesis builder
+# python3 convert_final_to_script.py
 import json
 
 from atypes import address_convert
