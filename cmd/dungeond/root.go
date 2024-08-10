@@ -129,8 +129,6 @@ func NewRootCmd() *cobra.Command {
 				}
 			}
 
-			fmt.Printf("Using %s: %+v\n", EnvTimeoutCommit, timeoutCommit)
-
 			return server.InterceptConfigsPreRunHandler(cmd, customAppTemplate, customAppConfig, customCMTConfig)
 		},
 	}
