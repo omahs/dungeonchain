@@ -1,9 +1,12 @@
 package main
 
 import (
+	"fmt"
 	"os"
+	"time"
 
 	dbm "github.com/cosmos/cosmos-db"
+	"github.com/spf13/cast"
 	"github.com/spf13/cobra"
 
 	"cosmossdk.io/log"
@@ -24,6 +27,11 @@ import (
 	wasmtypes "github.com/CosmWasm/wasmd/x/wasm/types"
 	"github.com/CryptoDungeon/dungeonchain/app"
 	"github.com/CryptoDungeon/dungeonchain/app/params"
+)
+
+const (
+	EnvPrefix        = "DUNGEOND"
+	EnvTimeoutCommit = EnvPrefix + "_CONSENSUS_TIMEOUT_COMMIT"
 )
 
 // NewRootCmd creates a new root command for chain app. It is called once in the
@@ -56,7 +64,7 @@ func NewRootCmd() *cobra.Command {
 		WithInput(os.Stdin).
 		WithAccountRetriever(authtypes.AccountRetriever{}).
 		WithHomeDir(app.DefaultNodeHome).
-		WithViper("")
+		WithViper(EnvPrefix)
 
 	rootCmd := &cobra.Command{
 		Use:           version.AppName,
@@ -102,8 +110,26 @@ func NewRootCmd() *cobra.Command {
 				return err
 			}
 
+			timeoutCommit := 1 * time.Second
+
+			// see if DUNGEOND_CONSENSUS_TIMEOUT_COMMIT is set, if so, use that
+			if v := os.Getenv(EnvTimeoutCommit); v != "" {
+				timeoutCommit = cast.ToDuration(v)
+				fmt.Printf("Using %s override: %+v\n", EnvTimeoutCommit, timeoutCommit)
+			}
+
 			customAppTemplate, customAppConfig := initAppConfig()
-			customCMTConfig := initCometBFTConfig()
+			customCMTConfig := initCometBFTConfig(timeoutCommit)
+
+			// Force faster block times if it was not overridden
+			if _, ok := os.LookupEnv(EnvTimeoutCommit); !ok {
+				err := os.Setenv(EnvTimeoutCommit, cast.ToString(timeoutCommit))
+				if err != nil {
+					return err
+				}
+			}
+
+			fmt.Printf("Using %s: %+v\n", EnvTimeoutCommit, timeoutCommit)
 
 			return server.InterceptConfigsPreRunHandler(cmd, customAppTemplate, customAppConfig, customCMTConfig)
 		},

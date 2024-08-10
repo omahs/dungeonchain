@@ -13,3 +13,7 @@
 
 - `make install`      *Builds the chain's binary*
 - `make local-image`  *Builds the chain's docker image*
+
+## Running
+
+by default the chain has a 1s timeout commit in [cmd/dungeond/root.go](./cmd/dungeond/root.go). You can change the blocktime by setting the env variable `DUNGEOND_CONSENSUS_TIMEOUT_COMMIT` to some time duration i.e. 500ms, 1s, 4s, etc.

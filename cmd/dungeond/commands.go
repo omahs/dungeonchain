@@ -4,6 +4,7 @@ import (
 	"errors"
 	"io"
 	"os"
+	"time"
 
 	"github.com/CryptoDungeon/dungeonchain/app"
 	cmtcfg "github.com/cometbft/cometbft/config"
@@ -42,12 +43,13 @@ import (
 
 // initCometBFTConfig helps to override default CometBFT Config values.
 // return cmtcfg.DefaultConfig if no custom configuration is required for the application.
-func initCometBFTConfig() *cmtcfg.Config {
+func initCometBFTConfig(timeoutCommit time.Duration) *cmtcfg.Config {
 	cfg := cmtcfg.DefaultConfig()
 
 	// these values put a higher strain on node memory
 	// cfg.P2P.MaxNumInboundPeers = 100
 	// cfg.P2P.MaxNumOutboundPeers = 40
+	cfg.Consensus.TimeoutCommit = timeoutCommit
 
 	return cfg
 }
