@@ -119,6 +119,8 @@ class User:
     address: str  # cosmos address
     shares: int = 0
     # This is JUST for users to see, calculation is done before.
+    # if mult is 0, then it was just a streamswap buyer and not eligible for the original airdrop
+    # https://app.streamswap.io/osmosis/stream/ATOM/4
     mult: int = 1
 
     def __init__(self, address: str, shares_amt: int, mult: int = 1):
@@ -128,6 +130,3 @@ class User:
 
     def get_allocation(self) -> int:
         return self.shares * 245 # hardcoded per share amount, ref: (100m tokens / 407922 shares = 245)
-
-    def get_total_amt(self) -> int:
-        return self.shares * self.multiple

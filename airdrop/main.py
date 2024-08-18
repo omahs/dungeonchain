@@ -88,6 +88,31 @@ def get_dungeon_nft_holders() -> dict[str, None]:
 
     return holders
 
+# get_streamswap_buyers returns the addresses & udgn tokens purchased
+def get_streamswap_buyers() -> dict[str, int]:
+    # https://app.streamswap.io/osmosis/stream/ATOM/4
+    # snapshot from the streamswap team
+    with open(f"./snapshots/streamswap_osmosis.csv") as f:
+        data = f.readlines()
+
+    # skip line 0
+    # Account Address,Spent(ATOM),Purchased(ssDRAGON)
+    data = data[1:]
+
+    buyers = {}
+    for line in data:
+        addr, _, purchased = line.split(",")
+        buyers[address_convert(addr, "cosmos")] = int(float(purchased) * 1_000_000)
+
+    # buyer validation check
+    total_purchased = sum(buyers.values())
+    if total_purchased < 99999999.99:
+        print(f"Total DRAGON purchased: {total_purchased}DRAGON")
+        print("Streamswap total purchased is less than 100m, please check")
+        exit(1)
+
+    return buyers
+
 
 def get_mad_sci_holders() -> dict[str, None]:
     holders = {}
@@ -132,6 +157,8 @@ def main():
     # get which teir they are in regardless of delegations
     combined_total: dict[str, int] = get_cosmos_delegators_combined_total()
 
+    streamswap: dict[str, int] = get_streamswap_buyers()
+
 
     for d in get_cosmos_delegators():
         # do not repeat since we already get all staked shares
@@ -170,16 +197,36 @@ def main():
 
         total_share_airdrop_allocations[d.delegator_address] = u
 
-    with open(f"FINAL_ALLOCATION.json", "w") as f:
-        allocs = [{
-            "address": a.address,
-            "shares": a.shares,
-            "dragon": a.get_allocation(),
-            # "multiplier": a.mult # confusing to see, just visual. already handled with `u.shares *= u.mult`
-        } for a in total_share_airdrop_allocations.values()]
-        s = sorted(allocs, key=lambda x: x["dragon"], reverse=True)
-        get_unique_shares(s)
+    allocs = [{
+        "address": a.address,
+        "shares": a.shares,
+        "dragon": a.get_allocation(),
+        # "multiplier": a.mult # confusing to see, just visual. already handled with `u.shares *= u.mult`
+    } for a in total_share_airdrop_allocations.values()]
+    get_unique_shares(allocs)
 
+    # iterate styreamswap addresses & add to allocs if found, if not found, append new
+    for addr, udgnPurcahsed in streamswap.items():
+        # update the value in allocs if found
+        found = False
+        for a in allocs:
+            if a["address"] == addr:
+                a["dragon"] += udgnPurcahsed
+                found = True
+                break
+
+        if not found:
+            print(f"Streamswap buyer {addr} not found in airdrop allocations, adding new entry")
+            allocs.append({
+                "address": addr,
+                "shares": 0,
+                "dragon": udgnPurcahsed
+            })
+
+    s = sorted(allocs, key=lambda x: x["dragon"], reverse=True)
+
+    with open(f"FINAL_ALLOCATION.json", "w") as f:
+        print(f"Output saved to FINAL_ALLOCATION.json")
         json.dump(s, f, indent=2)
 
 
