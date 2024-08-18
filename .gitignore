@@ -1,3 +1,10 @@
 # Built with https://github.com/rollchains/spawn
 configs/logs.json
 dist/
+
+airdrop/chains/*.json
+airdrop/chains/*.lz4
+
+airdrop/snapshots/*.json
+__pycache__/
+data/
