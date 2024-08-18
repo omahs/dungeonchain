@@ -39,6 +39,7 @@ type GenesisAccount struct {
 }
 
 // NOTE: does not support vesting accounts or modules. Just standard accounts.
+// You run this after you add your base / genesis modifications. i.e. vesting accounts, core team accounts, etc
 func AddFastGenesisAccountCmd(defaultNodeHome string, addressCodec address.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "fast-add-genesis-account [/abs/file/path.json]",
@@ -64,51 +65,17 @@ func AddFastGenesisAccountCmd(defaultNodeHome string, addressCodec address.Codec
 				return fmt.Errorf("failed to decode JSON: %w", err)
 			}
 
-			// Always appends
-			// appendflag, _ := cmd.Flags().GetBool(flagAppendMode)
-
 			genesisFileURL := config.GenesisFile()
 			appState, appGenesis, err := genutiltypes.GenesisStateFromGenFile(genesisFileURL)
 			if err != nil {
 				return fmt.Errorf("failed to unmarshal genesis state: %w", err)
 			}
 
-			// iterate accounts
 			fmt.Printf("Adding %d accounts\n", len(accounts))
-
-			if err := BatchAddGenesisAccount(clientCtx.Codec, true, "", appState, appGenesis, accounts, addressCodec); err != nil {
+			alwaysAppend := true
+			if err := BatchAddGenesisAccounts(clientCtx.Codec, alwaysAppend, appState, appGenesis, accounts, addressCodec); err != nil {
 				return fmt.Errorf("failed to add genesis account: %w", err)
 			}
-
-			// for i, acc := range accounts {
-			// 	// bech32 convert acc to dungeon from cosmos
-			// 	_, bz, err := bech32.DecodeAndConvert(acc.Address)
-			// 	if err != nil {
-			// 		return fmt.Errorf("failed to decode and convert address: %w", err)
-			// 	}
-
-			// 	// convert acc.Address from cosmos to dungeon
-			// 	addrBz, err := bech32.ConvertAndEncode("dungeon", bz)
-			// 	if err != nil {
-			// 		return fmt.Errorf("failed to convert address: %w", err)
-			// 	}
-
-			// 	addr, err := addressCodec.StringToBytes(addrBz)
-			// 	if err != nil {
-			// 		panic(fmt.Errorf("failed to parse address from arg[0]: %w", err))
-			// 	}
-
-			// 	coinStr := fmt.Sprintf("%d%s", int64(acc.Dragon*1_000_000), denom)
-
-			// 	// if err := BatchAddGenesisAccount(clientCtx.Codec, addr, true, coinStr, "", 0, 0, "", appState, appGenesis); err != nil {
-			// 	// return fmt.Errorf("failed to add genesis account: %w", err)
-			// 	// }
-
-			// 	// every 100 accounts, print
-			// 	if i%100 == 0 {
-			// 		fmt.Printf("Added %d accounts\n", i)
-			// 	}
-			// }
 
 			return ExportGenesisFile(appGenesis, genesisFileURL)
 		},
@@ -122,21 +89,17 @@ func AddFastGenesisAccountCmd(defaultNodeHome string, addressCodec address.Codec
 	return cmd
 }
 
-// Taken from the genutil.AddGenesisAccount package
-// AddGenesisAccount adds a genesis account to the genesis state.
-// Where `cdc` is client codec, `genesisFileUrl` is the path/url of current genesis file,
-// `accAddr` is the address to be added to the genesis state, `amountStr` is the list of initial coins
-// to be added for the account, `appendAcct` updates the account if already exists.
-// `vestingStart, vestingEnd and vestingAmtStr` respectively are the schedule start time, end time (unix epoch)
-// `moduleName“ is the module name for which the account is being created
-// and coins to be appended to the account already in the genesis.json file.
-func BatchAddGenesisAccount(
+// Taken from the genutil.AddGenesisAccount in the SDK.
+// This loads in the genesis state, updates the values within a map (for super fast modification)
+// then verifies and saves it to state in 1 go. before: 100 accounts would take ~5 seconds.
+// Now 250k accounts can be done in a few seconds.
+func BatchAddGenesisAccounts(
 	cdc codec.Codec,
 	// accAddr sdk.AccAddress,
 	appendAcct bool,
 	// amountStr, vestingAmtStr string,
 	// vestingStart, vestingEnd int64,
-	moduleName string,
+	// moduleName string,
 	appState map[string]json.RawMessage,
 	appGenesis *genutiltypes.AppGenesis,
 	accounts []GenesisAccount,
@@ -196,8 +159,7 @@ func BatchAddGenesisAccount(
 
 		// if account is in inState, we will just append it
 		if _, ok := inState[addStr]; ok {
-			fmt.Printf("Account %s already exists, updating bank gen state\n", addStr)
-
+			// fmt.Printf("Account %s already exists, updating bank gen state\n", addStr)
 			for idx, acc := range bankGenState.Balances {
 				if acc.Address != addStr {
 					continue
@@ -208,10 +170,8 @@ func BatchAddGenesisAccount(
 				break
 			}
 		} else {
-			var genAccount authtypes.GenesisAccount
-
 			balances := banktypes.Balance{Address: addStr, Coins: coins.Sort()}
-			genAccount = authtypes.NewBaseAccount(addrBz, nil, 0, 0)
+			genAccount := authtypes.NewBaseAccount(addrBz, nil, 0, 0)
 
 			if err := genAccount.Validate(); err != nil {
 				return fmt.Errorf("failed to validate new genesis account: %w", err)
@@ -220,7 +180,6 @@ func BatchAddGenesisAccount(
 			// does not exist, new
 			// Add the new account to the set of genesis accounts and sanitize the accounts afterwards.
 			accs = append(accs, genAccount)
-
 			bankGenState.Balances = append(bankGenState.Balances, balances)
 		}
 

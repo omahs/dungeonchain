@@ -149,6 +149,9 @@ for filename in network/dungeon-1/gentx/*.json; do
 done
 dungeond genesis collect-gentxs --gentx-dir network/dungeon-1/gentx --home $HOME_DIR
 
+# The genesis is to large to distribute via github (102M) due to the airdrop.
 cp $HOME_DIR/config/genesis.json ./network/$CHAIN_ID/genesis.json
+tar -czvf ./network/$CHAIN_ID/genesis.json.tar.gz ./network/$CHAIN_ID/genesis.json
+rm ./network/$CHAIN_ID/genesis.json
 
 dungeond genesis validate
