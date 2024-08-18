@@ -8,3 +8,4 @@ SFILE=crytpodungeon.json && tar -czvf ../archive/$SFILE.tar.gz $SFILE
 SFILE=juno_delegators.json && tar -czvf ../archive/$SFILE.tar.gz $SFILE
 SFILE=mad_sci_osmo.json && tar -czvf ../archive/$SFILE.tar.gz $SFILE
 SFILE=mad_sci_stars.json && tar -czvf ../archive/$SFILE.tar.gz $SFILE
+SFILE=streamswap_osmosis.csv && tar -czvf ../archive/$SFILE.tar.gz $SFILE
