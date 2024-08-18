@@ -1,7 +1,7 @@
 {
   "app_name": "dungeond",
   "app_version": "1.0.0",
-  "genesis_time": "2024-08-10T16:22:49.622385475Z",
+  "genesis_time": "2024-08-18T21:37:07.462042666Z",
   "chain_id": "dungeon-1",
   "initial_height": 1,
   "app_hash": null,
@@ -24,18 +24,32 @@
           "sequence": "0"
         },
         {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "dungeon1aj5jlmvqp8dd26rsec6624szthlazdn2vhxak9",
+          "pub_key": null,
+          "account_number": "1",
+          "sequence": "0"
+        },
+        {
+          "@type": "/cosmos.auth.v1beta1.BaseAccount",
+          "address": "dungeon10r39fueph9fq7a6lgswu4zdsg8t3gxlqzlnzxg",
+          "pub_key": null,
+          "account_number": "2",
+          "sequence": "0"
+        },
+        {
           "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
           "base_vesting_account": {
             "base_account": {
               "address": "dungeon1z0nvmv57cqax4s6lssft9yhfn8ksxcf79vmagu",
               "pub_key": null,
-              "account_number": "1",
+              "account_number": "3",
               "sequence": "0"
             },
             "original_vesting": [
               {
                 "denom": "udgn",
-                "amount": "18000000000000"
+                "amount": "17500000000000"
               }
             ],
             "delegated_free": [],
@@ -49,13 +63,13 @@
             "base_account": {
               "address": "dungeon10dx7clngek0ya05nzgx5sd2cmlszltfa2c69qs",
               "pub_key": null,
-              "account_number": "2",
+              "account_number": "4",
               "sequence": "0"
             },
             "original_vesting": [
               {
                 "denom": "udgn",
-                "amount": "18000000000000"
+                "amount": "17500000000000"
               }
             ],
             "delegated_free": [],
@@ -69,13 +83,13 @@
             "base_account": {
               "address": "dungeon1mzp9lhpjl8ndppzmuzh7c5zdjha597yes44qch",
               "pub_key": null,
-              "account_number": "3",
+              "account_number": "5",
               "sequence": "0"
             },
             "original_vesting": [
               {
                 "denom": "udgn",
-                "amount": "18000000000000"
+                "amount": "17500000000000"
               }
             ],
             "delegated_free": [],
@@ -89,13 +103,13 @@
             "base_account": {
               "address": "dungeon1ggasywhgu0yjg6jmgrv38sr75gu37c6cv2mfu9",
               "pub_key": null,
-              "account_number": "4",
+              "account_number": "6",
               "sequence": "0"
             },
             "original_vesting": [
               {
                 "denom": "udgn",
-                "amount": "18000000000000"
+                "amount": "17500000000000"
               }
             ],
             "delegated_free": [],
@@ -109,13 +123,13 @@
             "base_account": {
               "address": "dungeon1g048ed4sh35v9hr6mlpe27fv57gq2g27fev8e3",
               "pub_key": null,
-              "account_number": "5",
+              "account_number": "7",
               "sequence": "0"
             },
             "original_vesting": [
               {
                 "denom": "udgn",
-                "amount": "18000000000000"
+                "amount": "17500000000000"
               }
             ],
             "delegated_free": [],
@@ -129,13 +143,13 @@
             "base_account": {
               "address": "dungeon1ejacr05zf89226xfly8tn6hxafs3mwfajc00hu",
               "pub_key": null,
-              "account_number": "6",
+              "account_number": "8",
               "sequence": "0"
             },
             "original_vesting": [
               {
                 "denom": "udgn",
-                "amount": "18000000000000"
+                "amount": "17500000000000"
               }
             ],
             "delegated_free": [],
@@ -149,7 +163,7 @@
             "base_account": {
               "address": "dungeon17dj9ht0kp7a2gdq3l9jm2wyfzt8stw6nhucfrv",
               "pub_key": null,
-              "account_number": "7",
+              "account_number": "9",
               "sequence": "0"
             },
             "original_vesting": [
@@ -169,7 +183,7 @@
             "base_account": {
               "address": "dungeon12h772nnaz4249s4sz5p5a6we9qz583kypyyhh0",
               "pub_key": null,
-              "account_number": "8",
+              "account_number": "10",
               "sequence": "0"
             },
             "original_vesting": [
@@ -189,7 +203,7 @@
             "base_account": {
               "address": "dungeon1e8238v24qccht9mqc2w0r4luq462yxtt47evk4",
               "pub_key": null,
-              "account_number": "9",
+              "account_number": "11",
               "sequence": "0"
             },
             "original_vesting": [
@@ -209,7 +223,7 @@
             "base_account": {
               "address": "dungeon1fs67g6a7jdf4u6lkhyuwwlyyf9dw8ljtynhhpj",
               "pub_key": null,
-              "account_number": "10",
+              "account_number": "12",
               "sequence": "0"
             },
             "original_vesting": [
@@ -229,7 +243,7 @@
             "base_account": {
               "address": "dungeon1s6jjyxxmwx8jns4ye0yf92tdyq8cs8qsyydl6m",
               "pub_key": null,
-              "account_number": "11",
+              "account_number": "13",
               "sequence": "0"
             },
             "original_vesting": [
@@ -249,7 +263,7 @@
             "base_account": {
               "address": "dungeon1mk2yasfjljrvrxrjwj5823xh6lctkjc990zuea",
               "pub_key": null,
-              "account_number": "12",
+              "account_number": "14",
               "sequence": "0"
             },
             "original_vesting": [
@@ -269,7 +283,67 @@
             "base_account": {
               "address": "dungeon1zxg7695uplngjylndt46xms77v9lyxx8fm6fxy",
               "pub_key": null,
-              "account_number": "13",
+              "account_number": "15",
+              "sequence": "0"
+            },
+            "original_vesting": [
+              {
+                "denom": "udgn",
+                "amount": "2500000000000"
+              }
+            ],
+            "delegated_free": [],
+            "delegated_vesting": [],
+            "end_time": "1725027635"
+          }
+        },
+        {
+          "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
+          "base_vesting_account": {
+            "base_account": {
+              "address": "dungeon1dewdka0n9nnsutjlzkzayseg92kxx0wvc5jv2t",
+              "pub_key": null,
+              "account_number": "16",
+              "sequence": "0"
+            },
+            "original_vesting": [
+              {
+                "denom": "udgn",
+                "amount": "2500000000000"
+              }
+            ],
+            "delegated_free": [],
+            "delegated_vesting": [],
+            "end_time": "1725027635"
+          }
+        },
+        {
+          "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
+          "base_vesting_account": {
+            "base_account": {
+              "address": "dungeon10z6mwcv78kmnj4lm74ce3zydrqwuh5qh3hgfxe",
+              "pub_key": null,
+              "account_number": "17",
+              "sequence": "0"
+            },
+            "original_vesting": [
+              {
+                "denom": "udgn",
+                "amount": "2500000000000"
+              }
+            ],
+            "delegated_free": [],
+            "delegated_vesting": [],
+            "end_time": "1725027635"
+          }
+        },
+        {
+          "@type": "/cosmos.vesting.v1beta1.DelayedVestingAccount",
+          "base_vesting_account": {
+            "base_account": {
+              "address": "dungeon1lgu66ly24wz0x95hkhuzny754hfm9pku7gms23",
+              "pub_key": null,
+              "account_number": "18",
               "sequence": "0"
             },
             "original_vesting": [
@@ -308,7 +382,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "18000000000000"
+              "amount": "17500000000000"
             }
           ]
         },
@@ -317,7 +391,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "18000000000000"
+              "amount": "17500000000000"
             }
           ]
         },
@@ -326,7 +400,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "18000000000000"
+              "amount": "17500000000000"
             }
           ]
         },
@@ -349,11 +423,38 @@
           ]
         },
         {
+          "address": "dungeon1dewdka0n9nnsutjlzkzayseg92kxx0wvc5jv2t",
+          "coins": [
+            {
+              "denom": "udgn",
+              "amount": "2500000000000"
+            }
+          ]
+        },
+        {
+          "address": "dungeon10z6mwcv78kmnj4lm74ce3zydrqwuh5qh3hgfxe",
+          "coins": [
+            {
+              "denom": "udgn",
+              "amount": "2500000000000"
+            }
+          ]
+        },
+        {
+          "address": "dungeon10r39fueph9fq7a6lgswu4zdsg8t3gxlqzlnzxg",
+          "coins": [
+            {
+              "denom": "udgn",
+              "amount": "500000000"
+            }
+          ]
+        },
+        {
           "address": "dungeon10dx7clngek0ya05nzgx5sd2cmlszltfa2c69qs",
           "coins": [
             {
               "denom": "udgn",
-              "amount": "18000000000000"
+              "amount": "17500000000000"
             }
           ]
         },
@@ -371,7 +472,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "18000000000001"
+              "amount": "17500100000000"
             }
           ]
         },
@@ -389,7 +490,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "18000000000000"
+              "amount": "17500000000000"
             }
           ]
         },
@@ -398,7 +499,7 @@
           "coins": [
             {
               "denom": "udgn",
-              "amount": "18000000000000"
+              "amount": "17500000000000"
             }
           ]
         },
@@ -412,6 +513,15 @@
           ]
         },
         {
+          "address": "dungeon1aj5jlmvqp8dd26rsec6624szthlazdn2vhxak9",
+          "coins": [
+            {
+              "denom": "udgn",
+              "amount": "100000000"
+            }
+          ]
+        },
+        {
           "address": "dungeon17dj9ht0kp7a2gdq3l9jm2wyfzt8stw6nhucfrv",
           "coins": [
             {
@@ -419,17 +529,26 @@
               "amount": "5000000000000"
             }
           ]
+        },
+        {
+          "address": "dungeon1lgu66ly24wz0x95hkhuzny754hfm9pku7gms23",
+          "coins": [
+            {
+              "denom": "udgn",
+              "amount": "2500000000000"
+            }
+          ]
         }
       ],
       "supply": [
         {
           "denom": "udgn",
-          "amount": "146000000000001"
+          "amount": "150000700000000"
         }
       ],
       "denom_metadata": [
         {
-          "description": "Denom metadata for Dungeon Token (udgn)",
+          "description": "Denom metadata for Dragon Token (udgn / DGN)",
           "denom_units": [
             {
               "denom": "udgn",
@@ -563,7 +682,7 @@
         "proposal_cancel_ratio": "0.500000000000000000",
         "proposal_cancel_dest": "",
         "expedited_voting_period": "172800s",
-        "expedited_threshold": "0.500000000000000000",
+        "expedited_threshold": "0.510000000000000000",
         "expedited_min_deposit": [
           {
             "denom": "udgn",
@@ -722,7 +841,8 @@
         "code_upload_access": {
           "permission": "AnyOfAddresses",
           "addresses": [
-            "dungeon13gd97ke6erejqk2p050xkpc63jhtujre26s0gg"
+            "dungeon13gd97ke6erejqk2p050xkpc63jhtujre26s0gg",
+            "dungeon1aj5jlmvqp8dd26rsec6624szthlazdn2vhxak9"
           ]
         },
         "instantiate_default_permission": "AnyOfAddresses"
