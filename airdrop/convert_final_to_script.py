@@ -7,7 +7,7 @@ from atypes import address_convert
 with open("FINAL_ALLOCATION.json", "r") as f:
     airdrop_allocations = json.load(f)
 
-WALLET_PREFIX: str = "dragon"
+WALLET_PREFIX: str = "dungeon"
 
 class Allocation:
     def __init__(self, address: str, udragon_allocation: int):
@@ -36,3 +36,4 @@ for u in airdrop_allocations:
 # dump genesis_builder to a file named genesis_builder.sh
 with open("genesis_builder.sh", "w") as f:
     f.write("\n".join(genesis_builder))
+    print("Built the genesis builder.")

@@ -211,7 +211,7 @@ def main():
         found = False
         for a in allocs:
             if a["address"] == addr:
-                a["dragon"] += udgnPurcahsed
+                a["dragon"] += (udgnPurcahsed/1_000_000)
                 found = True
                 break
 
@@ -220,7 +220,7 @@ def main():
             allocs.append({
                 "address": addr,
                 "shares": 0,
-                "dragon": udgnPurcahsed
+                "dragon": (udgnPurcahsed/1_000_000)
             })
 
     s = sorted(allocs, key=lambda x: x["dragon"], reverse=True)
