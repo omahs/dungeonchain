@@ -14,8 +14,14 @@ class Allocation:
         self.address = address_convert(address, WALLET_PREFIX)
         self.udragon_allocation = udragon_allocation
 
+    # quicker than creating new instances every time
     @staticmethod
-    def from_json(json: dict):
+    def from_json(json: dict, baseAllocObj: "Allocation" = None) -> "Allocation":
+        if baseAllocObj is not None:
+            baseAllocObj.address = json["address"]
+            baseAllocObj.udragon_allocation = int(json["dragon"]) * 1_000_000
+            return baseAllocObj
+
         return Allocation(
             json["address"],
             int(json["dragon"]) * 1_000_000, # udragon
@@ -26,12 +32,20 @@ class Allocation:
 
 genesis_builder = []
 
-for u in airdrop_allocations:
-    alloc = Allocation.from_json(u)
+base_alloc = Allocation("cosmos10r39fueph9fq7a6lgswu4zdsg8t3gxlqvvvyvn", 0)
+for idx, u in enumerate(airdrop_allocations):
+    alloc = Allocation.from_json(u, base_alloc)
 
     genesis_builder.append(
-        f"dragond genesis add-genesis-account {alloc.address} {alloc.udragon_allocation}udragon --append"
+        f"dungeond genesis add-genesis-account {alloc.address} {alloc.udragon_allocation}udragon --append"
     )
+
+    if idx % 1_000 == 0:
+        print(f"Processed {idx:,} allocations.")
+
+        genesis_builder.append(
+            f"echo 'Processed {idx:,} allocations.'"
+        )
 
 # dump genesis_builder to a file named genesis_builder.sh
 with open("genesis_builder.sh", "w") as f:
