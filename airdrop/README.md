@@ -40,7 +40,7 @@ Snapshot Tool: [stargaze-nft-snapshots](https://github.com/Reecepbcups/stargaze-
 
 ## Share Conversions
 
-Total Dragon being Airdroped: 99,940,890 DRAGON
+Total Dragon being Airdropped: 99,940,890 DRAGON
 
 1 SHARE = 245 DRAGON
 
